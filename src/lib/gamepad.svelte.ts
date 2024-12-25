@@ -3,20 +3,28 @@ export const state = $state({
 	count: 0
 });
 
+let updating = false;
+
 const BUZZERS = [0, 1, 2, 3];
 
 window.addEventListener('gamepadconnected', (event) => {
 	const i = event.gamepad.index;
 	state.buzzing[i] = false;
 
-	updateState();
+	if (!updating) {
+		updating = true;
+		updateState();
+	}
 });
 
 window.addEventListener('gamepaddisconnected', (event) => {
 	const i = event.gamepad.index;
 	state.buzzing[i] = false;
 
-	updateState();
+	if (!updating) {
+		updating = true;
+		updateState();
+	}
 });
 
 function updateState() {
@@ -37,9 +45,5 @@ function updateState() {
 		state.buzzing[pad.index] = shapePressed;
 	}
 
-	requestAnimationFrame(updateState);
-}
-
-export function startLoop() {
 	requestAnimationFrame(updateState);
 }
