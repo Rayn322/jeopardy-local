@@ -1,5 +1,6 @@
+import { persisted } from 'svelte-persisted-store';
 import { safeParse } from 'valibot';
-import { BoardSchema } from './types';
+import { BoardSchema, type Board } from './types';
 
 export const controllerState = $state({
 	buzzing: [] as boolean[],
@@ -7,16 +8,19 @@ export const controllerState = $state({
 });
 
 export const gameState = $state({
-	board: {}
+	// board: undefined as Board | undefined
 });
 
+export const board = persisted<Board | undefined>('board', undefined);
+
 export function setBoard(input: unknown) {
-	const { success, output } = safeParse(BoardSchema, input);
+	const { success, output, issues } = safeParse(BoardSchema, input);
 
 	if (success) {
-		gameState.board = output;
+		board.set(output);
 		return true;
 	} else {
+		console.error('setBoard failed', issues);
 		return false;
 	}
 }

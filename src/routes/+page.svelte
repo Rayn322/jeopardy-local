@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { board, setBoard } from '$lib/state.svelte';
 	import { open } from '@tauri-apps/plugin-dialog';
+	import { readTextFile } from '@tauri-apps/plugin-fs';
 
 	let filePath = $state('');
 	let fileName = $derived(filePath.split('/').pop());
@@ -22,7 +25,14 @@
 	}
 
 	async function start() {
-		// setBoard
+		const board = await readTextFile(filePath);
+		const success = setBoard(JSON.parse(board));
+
+		if (success) {
+			goto('/game');
+		} else {
+			alert('JSON is not a valid board!');
+		}
 	}
 </script>
 
@@ -30,7 +40,7 @@
 
 <div class="flex flex-col items-start gap-4">
 	<div>
-		<button class="rounded-lg bg-black px-4 py-2" onclick={selectBoardFile}>Select Board</button>
+		<button class="rounded-lg bg-black px-4 py-2" onclick={selectBoardFile}> Select Board </button>
 		{#if fileName}
 			<p>Selected: {fileName}</p>
 		{:else}
@@ -40,9 +50,13 @@
 
 	<button
 		class="rounded-lg bg-blue-700 px-4 py-2 disabled:bg-gray-500"
-		disabled={!fileName}
+		disabled={!filePath}
 		onclick={start}
 	>
 		Start
 	</button>
+
+	{#if $board}
+		<a href="/game">Resume Game</a>
+	{/if}
 </div>
