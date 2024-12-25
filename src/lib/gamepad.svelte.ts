@@ -1,7 +1,4 @@
-export const state = $state({
-	buzzing: [] as boolean[],
-	count: 0
-});
+import { controllerState } from './state.svelte';
 
 let updating = false;
 
@@ -9,7 +6,7 @@ const BUZZERS = [0, 1, 2, 3];
 
 window.addEventListener('gamepadconnected', (event) => {
 	const i = event.gamepad.index;
-	state.buzzing[i] = false;
+	controllerState.buzzing[i] = false;
 
 	if (!updating) {
 		updating = true;
@@ -19,7 +16,7 @@ window.addEventListener('gamepadconnected', (event) => {
 
 window.addEventListener('gamepaddisconnected', (event) => {
 	const i = event.gamepad.index;
-	state.buzzing[i] = false;
+	controllerState.buzzing[i] = false;
 
 	if (!updating) {
 		updating = true;
@@ -28,7 +25,7 @@ window.addEventListener('gamepaddisconnected', (event) => {
 });
 
 function updateState() {
-	state.count = performance.now();
+	controllerState.count = performance.now();
 	const gamepads = navigator.getGamepads();
 
 	for (const pad of gamepads) {
@@ -42,7 +39,7 @@ function updateState() {
 			}
 		}
 
-		state.buzzing[pad.index] = shapePressed;
+		controllerState.buzzing[pad.index] = shapePressed;
 	}
 
 	requestAnimationFrame(updateState);

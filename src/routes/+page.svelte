@@ -20,6 +20,10 @@
 			filePath = file;
 		}
 	}
+
+	async function start() {
+		// setBoard
+	}
 </script>
 
 <h1 class="mb-10 text-3xl font-bold">Jeopardy</h1>
@@ -34,7 +38,11 @@
 		{/if}
 	</div>
 
-	<button class="rounded-lg bg-blue-700 px-4 py-2 disabled:bg-gray-500" disabled={!fileName}>
+	<button
+		class="rounded-lg bg-blue-700 px-4 py-2 disabled:bg-gray-500"
+		disabled={!fileName}
+		onclick={start}
+	>
 		Start
 	</button>
 </div>
