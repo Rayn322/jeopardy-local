@@ -16,3 +16,5 @@ export const BoardSchema = object({
 });
 
 export type Board = InferOutput<typeof BoardSchema>;
+export type Category = Board['categories'][0];
+export type Question = Category['questions'][0];

@@ -29,7 +29,7 @@
 		const success = setBoard(JSON.parse(board));
 
 		if (success) {
-			goto('/game');
+			goto('/board');
 		} else {
 			alert('JSON is not a valid board!');
 		}
@@ -57,6 +57,6 @@
 	</button>
 
 	{#if $board}
-		<a href="/game">Resume Game</a>
+		<a href="/board">Resume Game</a>
 	{/if}
 </div>
