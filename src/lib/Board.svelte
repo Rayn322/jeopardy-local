@@ -1,8 +1,7 @@
 <script lang="ts">
 	import QuestionDisplay from './Question.svelte';
+	import { board } from './state.svelte';
 	import type { Board, Category, Question } from './types';
-
-	let { board }: { board: Board } = $props();
 
 	let categoryIndex = $state(0);
 	let questionIndex = $state(0);
@@ -19,16 +18,20 @@
 	}
 </script>
 
-<QuestionDisplay {categoryIndex} {questionIndex} {board} bind:visible />
+<QuestionDisplay {categoryIndex} {questionIndex} bind:visible />
 
-<h1 class="mb-4 text-center text-2xl">{board.name}</h1>
-<div class="flex">
-	{#each board.categories as c, i}
-		{@render category(c, i)}
-	{/each}
-</div>
+{#if $board}
+	<h1 class="mb-4 text-center text-2xl">{$board.name}</h1>
+	<div class="flex">
+		{#each $board.categories as c, i}
+			{@render category(c, i, $board)}
+		{/each}
+	</div>
+{:else}
+	<p>Loading...</p>
+{/if}
 
-{#snippet category(category: Category, i: number)}
+{#snippet category(category: Category, i: number, board: Board)}
 	<!-- fun clsx stuff -->
 	<div
 		class={[

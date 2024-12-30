@@ -4,7 +4,7 @@
 </script>
 
 {#if $board}
-	<Board board={$board} />
+	<Board />
 {:else}
 	<p>No board</p>
 {/if}
