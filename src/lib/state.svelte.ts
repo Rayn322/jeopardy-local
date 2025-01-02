@@ -7,9 +7,34 @@ export const controllerState = $state({
 	count: 0
 });
 
-export const gameState = $state({
-	// board: undefined as Board | undefined
+export const sharedState = persisted('sharedState', {
+	question: {
+		open: false,
+		showAnswer: false,
+		categoryIndex: 0,
+		questionIndex: 0,
+		points: 0
+	}
 });
+
+export function openQuestion(categoryIndex: number, questionIndex: number) {
+	sharedState.update((state) => {
+		state.question.open = true;
+		state.question.showAnswer = false;
+		state.question.categoryIndex = categoryIndex;
+		state.question.questionIndex = questionIndex;
+		state.question.points = questionIndex + 1;
+
+		return state;
+	});
+}
+
+export function closeQuestion() {
+	sharedState.update((state) => {
+		state.question.open = false;
+		return state;
+	});
+}
 
 export const board = persisted<Board | undefined>('board', undefined);
 

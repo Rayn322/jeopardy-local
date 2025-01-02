@@ -1,4 +1,4 @@
-import { array, object, string, type InferOutput } from 'valibot';
+import { array, boolean, object, optional, string, type InferOutput } from 'valibot';
 
 export const BoardSchema = object({
 	name: string(),
@@ -8,7 +8,8 @@ export const BoardSchema = object({
 			questions: array(
 				object({
 					question: string(),
-					answer: string()
+					answer: string(),
+					available: optional(boolean(), true)
 				})
 			)
 		})

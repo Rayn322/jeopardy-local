@@ -14,7 +14,16 @@
 			{
 				"title": "Ryan Jeopardy",
 				"width": 800,
-				"height": 600
+				"height": 600,
+				"acceptFirstMouse": true
+			},
+			{
+				"label": "admin",
+				"title": "Ryan Jeopardy (Admin)",
+				"url": "/admin",
+				"width": 800,
+				"height": 600,
+				"acceptFirstMouse": true
 			}
 		],
 		"security": {

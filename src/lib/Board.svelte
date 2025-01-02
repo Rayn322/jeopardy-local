@@ -1,24 +1,13 @@
 <script lang="ts">
 	import QuestionDisplay from './Question.svelte';
-	import { board } from './state.svelte';
+	import { board, openQuestion, sharedState } from './state.svelte';
 	import type { Board, Category, Question } from './types';
 
 	let categoryIndex = $state(0);
 	let questionIndex = $state(0);
-	let visible = $state(false);
-
-	/**
-	 * @param i Category index
-	 * @param j Question index
-	 */
-	function openQuestion(i: number, j: number) {
-		categoryIndex = i;
-		questionIndex = j;
-		visible = true;
-	}
 </script>
 
-<QuestionDisplay {categoryIndex} {questionIndex} bind:visible />
+<QuestionDisplay bind:visible={$sharedState.question.open} />
 
 {#if $board}
 	<h1 class="mb-4 text-center text-2xl">{$board.name}</h1>
