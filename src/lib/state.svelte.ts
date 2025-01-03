@@ -7,6 +7,7 @@ export const controllerState = $state({
 	count: 0
 });
 
+// abuse localstorage lol
 export const sharedState = persisted('sharedState', {
 	question: {
 		isOpen: false,
