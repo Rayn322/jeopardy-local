@@ -7,7 +7,7 @@
 	let questionIndex = $state(0);
 </script>
 
-<QuestionDisplay bind:visible={$sharedState.question.open} />
+<QuestionDisplay bind:visible={$sharedState.question.isOpen} />
 
 {#if $board}
 	<h1 class="mb-4 text-center text-2xl">{$board.name}</h1>
@@ -38,7 +38,11 @@
 
 {#snippet question(question: Question, j: number, i: number)}
 	{#if question}
-		<button class="h-25 block w-full p-6 text-2xl" onclick={() => openQuestion(i, j)}>
+		<button
+			class="h-25 block w-full p-6 text-2xl tabular-nums disabled:text-transparent"
+			disabled={!question.available}
+			onclick={() => openQuestion(i, j)}
+		>
 			{j + 1}
 		</button>
 	{:else}

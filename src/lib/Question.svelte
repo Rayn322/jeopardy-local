@@ -13,7 +13,7 @@
 	<div in:scale out:fade class="absolute left-0 top-0 h-dvh w-dvw bg-black p-10">
 		<h1 class="flex h-full w-full items-center justify-center text-3xl">
 			{#if question}
-				{#if $sharedState.question.showAnswer}
+				{#if $sharedState.question.isShowingAnswer}
 					{question.answer}
 				{:else}
 					{question.question}

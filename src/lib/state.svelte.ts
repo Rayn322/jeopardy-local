@@ -9,8 +9,8 @@ export const controllerState = $state({
 
 export const sharedState = persisted('sharedState', {
 	question: {
-		open: false,
-		showAnswer: false,
+		isOpen: false,
+		isShowingAnswer: false,
 		categoryIndex: 0,
 		questionIndex: 0,
 		points: 0
@@ -19,8 +19,8 @@ export const sharedState = persisted('sharedState', {
 
 export function openQuestion(categoryIndex: number, questionIndex: number) {
 	sharedState.update((state) => {
-		state.question.open = true;
-		state.question.showAnswer = false;
+		state.question.isOpen = true;
+		state.question.isShowingAnswer = false;
 		state.question.categoryIndex = categoryIndex;
 		state.question.questionIndex = questionIndex;
 		state.question.points = questionIndex + 1;
@@ -31,7 +31,25 @@ export function openQuestion(categoryIndex: number, questionIndex: number) {
 
 export function closeQuestion() {
 	sharedState.update((state) => {
-		state.question.open = false;
+		state.question.isOpen = false;
+		return state;
+	});
+}
+
+export function showAnswer() {
+	sharedState.update((state) => {
+		state.question.isShowingAnswer = true;
+
+		board.update((board) => {
+			const { categoryIndex, questionIndex } = state.question;
+
+			if (board) {
+				board.categories[categoryIndex].questions[questionIndex].available = false;
+			}
+
+			return board;
+		});
+
 		return state;
 	});
 }
